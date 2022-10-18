@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using Microsoft.DirectX.Direct3D;
+using Microsoft.DirectX;
+namespace WindowsFormsApplication1
+{
+ public partial class Form1 : Form
+ {
+ Microsoft.DirectX.Direct3D.Device d;
+ public Form1()
+ {
+ InitializeComponent();
+ InitDevice();
+ }
+ private void InitDevice()
+ {
+
+PresentParameters pp = new PresentParameters();
+ pp.Windowed = true; // Specify that it will be in a window
+ pp.SwapEffect = SwapEffect.Discard;
+// After the current screen is drawn, it will be automatically deleted from memory
+ d = new Device(0, DeviceType.Hardware, this,
+CreateFlags.HardwareVertexProcessing, pp);
+ }
+ private void Render()
+ {
+ d.Clear(ClearFlags.Target, Color.Aqua, 0, 1);
+ d.Present();
+ }
+ private void Form1_Paint(object sender, PaintEventArgs e)
+ {
+ Render();
+ }
+ }
+}
